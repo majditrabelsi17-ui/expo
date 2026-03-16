@@ -22,6 +22,7 @@ import {
   createInjectedScriptElements,
   serializeHelmetToHtml,
 } from '../utils/html';
+import { pipeableStreamToReadable } from '../utils/streams';
 
 const debug = createDebug('expo:router:server:renderStaticContent');
 
@@ -126,6 +127,53 @@ export async function getStaticContent(
   }
 
   return '<!DOCTYPE html>' + output;
+}
+
+export async function getStreamingContent(
+  location: URL,
+  options?: GetStaticContentOptions
+): Promise<ReadableStream> {
+  const headContext: { helmet?: any } = {};
+  const Root = getRootComponent();
+
+  const { element } = registerStaticRootComponent(ExpoRoot, {
+    location,
+    context: ctx,
+    wrapper: ({ children }: React.ComponentProps<any>) => (
+      <Root>
+        <div id="root">{children}</div>
+      </Root>
+    ),
+  });
+
+  Font.resetServerContext();
+  resetReactNavigationContexts();
+
+  const loaderKey = options?.loader ? options.loader.key + location.search : null;
+  const loadedData = loaderKey ? { [loaderKey]: options?.loader?.data ?? null } : null;
+
+  return new Promise<ReadableStream>((resolve, reject) => {
+    const { pipe, abort } = ReactDOMServer.renderToPipeableStream(
+      <Head.Provider context={headContext}>
+        <InnerRoot loadedData={loadedData}>{element}</InnerRoot>
+      </Head.Provider>,
+      {
+        onShellReady() {
+          try {
+            resolve(pipeableStreamToReadable(pipe, abort, options?.request?.signal));
+          } catch (error) {
+            reject(error);
+          }
+        },
+        onShellError(error: unknown) {
+          reject(error);
+        },
+        onError(error: unknown) {
+          debug('Streaming render error:', error);
+        },
+      }
+    );
+  });
 }
 
 function mixHeadComponentsWithStaticResults(helmet: any, html: string) {

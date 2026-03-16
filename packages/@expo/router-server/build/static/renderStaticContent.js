@@ -38,6 +38,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getManifest = exports.getBuildTimeServerManifestAsync = void 0;
 exports.getStaticContent = getStaticContent;
+exports.getStreamingContent = getStreamingContent;
 /**
  * Copyright © 2023 650 Industries.
  *
@@ -56,6 +57,7 @@ const getRootComponent_1 = require("./getRootComponent");
 const html_1 = require("./html");
 const debug_1 = require("../utils/debug");
 const html_2 = require("../utils/html");
+const streams_1 = require("../utils/streams");
 const debug = (0, debug_1.createDebug)('expo:router:server:renderStaticContent');
 function resetReactNavigationContexts() {
     // https://github.com/expo/router/discussions/588
@@ -118,6 +120,41 @@ async function getStaticContent(location, options) {
         }
     }
     return '<!DOCTYPE html>' + output;
+}
+async function getStreamingContent(location, options) {
+    const headContext = {};
+    const Root = (0, getRootComponent_1.getRootComponent)();
+    const { element } = (0, static_1.registerStaticRootComponent)(expo_router_1.ExpoRoot, {
+        location,
+        context: _ctx_1.ctx,
+        wrapper: ({ children }) => (<Root>
+        <div id="root">{children}</div>
+      </Root>),
+    });
+    Font.resetServerContext();
+    resetReactNavigationContexts();
+    const loaderKey = options?.loader ? options.loader.key + location.search : null;
+    const loadedData = loaderKey ? { [loaderKey]: options?.loader?.data ?? null } : null;
+    return new Promise((resolve, reject) => {
+        const { pipe, abort } = server_node_1.default.renderToPipeableStream(<head_1.default.Provider context={headContext}>
+        <static_1.InnerRoot loadedData={loadedData}>{element}</static_1.InnerRoot>
+      </head_1.default.Provider>, {
+            onShellReady() {
+                try {
+                    resolve((0, streams_1.pipeableStreamToReadable)(pipe, abort, options?.request?.signal));
+                }
+                catch (error) {
+                    reject(error);
+                }
+            },
+            onShellError(error) {
+                reject(error);
+            },
+            onError(error) {
+                debug('Streaming render error:', error);
+            },
+        });
+    });
 }
 function mixHeadComponentsWithStaticResults(helmet, html) {
     const { headTags, htmlAttributes, bodyAttributes } = (0, html_2.serializeHelmetToHtml)(helmet);

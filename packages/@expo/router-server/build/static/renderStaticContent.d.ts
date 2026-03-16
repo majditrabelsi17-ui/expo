@@ -19,5 +19,6 @@ export type GetStaticContentOptions = {
     };
 };
 export declare function getStaticContent(location: URL, options?: GetStaticContentOptions): Promise<string>;
+export declare function getStreamingContent(location: URL, options?: GetStaticContentOptions): Promise<ReadableStream>;
 export { getBuildTimeServerManifestAsync, getManifest } from './getServerManifest';
 //# sourceMappingURL=renderStaticContent.d.ts.map
