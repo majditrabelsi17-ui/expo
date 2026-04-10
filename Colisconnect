@@ -1,0 +1,47 @@
+import React, { useState } from 'react';
+import { View, Text, Button } from 'react-native';
+import { WebView } from 'react-native-webview';
+
+const PaiementScreen = ({ route }) => {
+  const { transporteur, montant } = route.params;
+  const [urlPaiement, setUrlPaiement] = useState('');
+  const [methodePaiement, setMethodePaiement] = useState('');
+
+  const handlePaiementPayTun = () => {
+    // Code pour générer l'URL de paiement PayTun
+    const apiKey = 'VOTRE_API_KEY_PAYTUN';
+    const apiSecret = 'VOTRE_API_SECRET_PAYTUN';
+    const montantTND = montant;
+    const reference = 'REF-' + new Date().getTime();
+    const url = `https:                                                                                                                                        
+    setUrlPaiement(url);
+    setMethodePaiement('PayTun');
+  };
+
+  const handlePaiementD17 = () => {
+                                                
+    const apiKey = 'VOTRE_API_KEY_D17';
+    const apiSecret = 'VOTRE_API_SECRET_D17';
+    const montantTND = montant;
+    const reference = 'REF-' + new Date().getTime();
+    const url = `https://www.d17.tn/payment/checkout?api_key=${apiKey}&amount=${montantTND}&reference=${reference}&return_url=https://example.com/success`;
+    setUrlPaiement(url);
+    setMethodePaiement('D17');
+  };
+
+  return (
+    <View>
+      <Text>Paiement en ligne</Text>
+      <Text>Transporteur : {transporteur.nom}</Text>
+      <Text>Montant : {montant} TND</Text>
+      <Button title="Payer avec PayTun" onPress={handlePaiementPayTun} />
+      <Button title="Payer avec D17" onPress={handlePaiementD17} />
+      {urlPaiement && (
+        <WebView
+          source={{ uri: urlPaiement }}
+          style={{ width: '100%', height: 500 }}
+        />
+      )}
+    </View>
+  );
+};
