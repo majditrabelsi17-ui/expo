@@ -1,8 +1,8 @@
 {
   "source": {
     "url": "https://raw.githubusercontent.com/expo/eas-cli/main/packages/eas-cli/README.md",
-    "fetchedAt": "2026-03-11T17:59:39.996Z",
-    "cliVersion": "18.3.0"
+    "fetchedAt": "2026-04-04T06:57:27.992Z",
+    "cliVersion": "18.5.0"
   },
   "totalCommands": 102,
   "commands": [
@@ -84,7 +84,7 @@
     {
       "command": "eas build:dev",
       "description": "run dev client simulator/emulator build with matching fingerprint or create a new one",
-      "usage": "USAGE\n  $ eas build:dev [-p ios|android] [-e PROFILE_NAME]\n\nFLAGS\n  -e, --profile=PROFILE_NAME  Name of the build profile from eas.json. It must be a profile allowing to create\n                              emulator/simulator internal distribution dev client builds. The \"development-simulator\"\n                              build profile will be selected by default.\n  -p, --platform=<option>     <options: ios|android>\n\nDESCRIPTION\n  run dev client simulator/emulator build with matching fingerprint or create a new one"
+      "usage": "USAGE\n  $ eas build:dev [-p ios|android] [-e PROFILE_NAME] [--skip-build-if-not-found]\n\nFLAGS\n  -e, --profile=PROFILE_NAME     Name of the build profile from eas.json. It must be a profile allowing to create\n                                 emulator/simulator internal distribution dev client builds. The \"development-simulator\"\n                                 build profile will be selected by default.\n  -p, --platform=<option>        <options: ios|android>\n      --skip-build-if-not-found  Skip build if no successful build with matching fingerprint is found.\n\nDESCRIPTION\n  run dev client simulator/emulator build with matching fingerprint or create a new one"
     },
     {
       "command": "eas build:download",
@@ -329,12 +329,12 @@
     {
       "command": "eas metadata:pull",
       "description": "generate the local store configuration from the app stores",
-      "usage": "USAGE\n  $ eas metadata:pull [-e <value>]\n\nFLAGS\n  -e, --profile=<value>  Name of the submit profile from eas.json. Defaults to \"production\" if defined in eas.json.\n\nDESCRIPTION\n  generate the local store configuration from the app stores"
+      "usage": "USAGE\n  $ eas metadata:pull [-e <value>] [--non-interactive]\n\nFLAGS\n  -e, --profile=<value>  Name of the submit profile from eas.json. Defaults to \"production\" if defined in eas.json.\n      --non-interactive  Run the command in non-interactive mode.\n\nDESCRIPTION\n  generate the local store configuration from the app stores"
     },
     {
       "command": "eas metadata:push",
       "description": "sync the local store configuration to the app stores",
-      "usage": "USAGE\n  $ eas metadata:push [-e <value>]\n\nFLAGS\n  -e, --profile=<value>  Name of the submit profile from eas.json. Defaults to \"production\" if defined in eas.json.\n\nDESCRIPTION\n  sync the local store configuration to the app stores"
+      "usage": "USAGE\n  $ eas metadata:push [-e <value>] [--non-interactive]\n\nFLAGS\n  -e, --profile=<value>  Name of the submit profile from eas.json. Defaults to \"production\" if defined in eas.json.\n      --non-interactive  Run the command in non-interactive mode.\n\nDESCRIPTION\n  sync the local store configuration to the app stores"
     },
     {
       "command": "eas new [PATH]",

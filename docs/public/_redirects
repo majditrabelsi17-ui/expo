@@ -319,6 +319,12 @@
 /versions/unversioned/sdk/router-ui /versions/unversioned/sdk/router/ui 301
 /versions/unversioned/sdk/router-native-tabs /versions/unversioned/sdk/router/native-tabs 301
 /versions/unversioned/sdk/router-split-view /versions/unversioned/sdk/router/split-view 301
+/versions/v55.0.0/sdk/router-ui /versions/v55.0.0/sdk/router/ui 301
+/versions/v55.0.0/sdk/router-native-tabs /versions/v55.0.0/sdk/router/native-tabs 301
+/versions/v55.0.0/sdk/router-split-view /versions/v55.0.0/sdk/router/split-view 301
+/versions/latest/sdk/router-ui /versions/latest/sdk/router/ui 301
+/versions/latest/sdk/router-native-tabs /versions/latest/sdk/router/native-tabs 301
+/versions/latest/sdk/router-split-view /versions/latest/sdk/router/split-view 301
 
 # After merging get-started/introduction into get-started/create-a-project
 /get-started/introduction /get-started/create-a-project 301
@@ -345,3 +351,18 @@
 /versions/v55.0.0/sdk/ui/jetpack-compose/circularprogress /versions/v55.0.0/sdk/ui/jetpack-compose/progress 301
 /versions/latest/sdk/ui/jetpack-compose/linearprogress /versions/latest/sdk/ui/jetpack-compose/progress 301
 /versions/latest/sdk/ui/jetpack-compose/circularprogress /versions/latest/sdk/ui/jetpack-compose/progress 301
+
+# Picker replaced by SegmentedButton
+/versions/latest/sdk/ui/jetpack-compose/picker /versions/latest/sdk/ui/jetpack-compose/segmentedbutton 301
+/versions/unversioned/sdk/ui/jetpack-compose/picker /versions/unversioned/sdk/ui/jetpack-compose/segmentedbutton 301
+/versions/v55.0.0/sdk/ui/jetpack-compose/picker /versions/v55.0.0/sdk/ui/jetpack-compose/segmentedbutton 301
+
+# Based on Algolia 404 report 2026-04-01
+/versions/latest/sdk/secure-store /versions/latest/sdk/securestore 301
+/versions/latest/sdk/av /versions/v54.0.0/sdk/av 301
+/versions/latest/sdk/ui/jetpack-compose/floatingactionbutton /versions/unversioned/sdk/ui/jetpack-compose/floatingactionbutton 301
+
+# TextInput renamed to TextField
+/versions/latest/sdk/ui/jetpack-compose/textinput /versions/latest/sdk/ui/jetpack-compose/textfield 301
+/versions/unversioned/sdk/ui/jetpack-compose/textinput /versions/unversioned/sdk/ui/jetpack-compose/textfield 301
+/versions/v55.0.0/sdk/ui/jetpack-compose/textinput /versions/v55.0.0/sdk/ui/jetpack-compose/textfield 301
